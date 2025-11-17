@@ -1,0 +1,30 @@
+[
+  {
+    "nome": "M4A1",
+    "tipo": "Rifle de Assalto",
+    "dano": 42,
+    "cadencia": 780,
+    "descricao": "Rifle versátil com alto controle e precisão.",
+    "imagem": "imagens/armas/xm4.png",
+    "attachments": [
+      { "nome": "Mira Holo", "tipo": "Mira", "efeito": "+ Precisão, - Velocidade de ADS" },
+      { "nome": "Cano Pesado", "tipo": "Cano", "efeito": "+ Alcance, - Mobilidade" },
+      { "nome": "Empunhadura Tática", "tipo": "Empunhadura", "efeito": "+ Controle de recuo" },
+      { "nome": "Coronha Leve", "tipo": "Coronha", "efeito": "+ Velocidade de movimento" }
+    ]
+  },
+  {
+    "nome": "MP5",
+    "tipo": "Submetralhadora",
+    "dano": 32,
+    "cadencia": 900,
+    "descricao": "Alta cadência e excelente mobilidade para combates próximos.",
+    "imagem": "imagens/armas/c9.png",
+    "attachments": [
+      { "nome": "Mira Reflex", "tipo": "Mira", "efeito": "+ Precisão, - Velocidade de ADS" },
+      { "nome": "Cano Curto", "tipo": "Cano", "efeito": "+ Mobilidade, - Alcance" },
+      { "nome": "Empunhadura Vertical", "tipo": "Empunhadura", "efeito": "+ Controle de recuo" },
+      { "nome": "Sem Coronha", "tipo": "Coronha", "efeito": "+ Mobilidade, - Precisão" }
+    ]
+  }
+]
