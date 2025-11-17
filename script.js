@@ -1,143 +1,139 @@
-// Referências aos botões e ao conteúdo principal
-const conteudo = document.getElementById('conteudo');
-const btnArmas = document.getElementById('btnArmas');
-const btnAtualizacoes = document.getElementById('btnAtualizacoes');
-const btnNoticias = document.getElementById('btnNoticias');
-const btnStats = document.getElementById('btnStats');
-// ========= SONS DE INTERFACE ==========
-const clickSound = new Audio('assets/sounds/menu-click.mp3');
-clickSound.volume = 0.4; // volume mais suave
+// =========================================
+//  StatsWzX – Script Profissional (MODELO C)
+//  Mantém seu layout, sons, tema e filtro.
+//  Agora com METAS Reais em Badges.
+// =========================================
 
-// Eventos de clique dos menus com som
-btnArmas.addEventListener('click', () => {
+// BOTÕES E ELEMENTOS
+const conteudo = document.getElementById("conteudo");
+const btnArmas = document.getElementById("btnArmas");
+const btnAtualizacoes = document.getElementById("btnAtualizacoes");
+const btnNoticias = document.getElementById("btnNoticias");
+const btnStats = document.getElementById("btnStats");
+
+// =====================
+// 🔊 SONS DO MENU
+// =====================
+const clickSound = new Audio("assets/sounds/menu-click.mp3");
+clickSound.volume = 0.4;
+
+function playClick() {
   clickSound.currentTime = 0;
   clickSound.play();
-  mostrarArmas();
-});
+}
 
-btnAtualizacoes.addEventListener('click', () => {
-  clickSound.currentTime = 0;
-  clickSound.play();
-  mostrarAtualizacoes();
-});
+btnArmas.addEventListener("click", () => { playClick(); mostrarArmas(); });
+btnAtualizacoes.addEventListener("click", () => { playClick(); mostrarAtualizacoes(); });
+btnNoticias.addEventListener("click", () => { playClick(); mostrarNoticias(); });
+btnStats.addEventListener("click", () => { playClick(); mostrarStats(); });
 
-btnNoticias.addEventListener('click', () => {
-  clickSound.currentTime = 0;
-  clickSound.play();
-  mostrarNoticias();
-});
-
-btnStats.addEventListener('click', () => {
-  clickSound.currentTime = 0;
-  clickSound.play();
-  mostrarStats();
-});
-
-
-// Cache para evitar recarregar JSON toda hora
+// =====================
+// 📦 CACHE JSON
+// =====================
 let armasCache = null;
-let filtroCriado = false; // <- evita duplicar o filtro
+let filtroCriado = false;
 
+
+// =========================================
+// 🔥 MOSTRAR ARMAS (AGORA COM BADGES C)
+// =========================================
 function mostrarArmas() {
-  // Se o filtro já foi criado, só exibe novamente
+
   if (!filtroCriado) {
     conteudo.innerHTML = `
       <div class="filtro-container">
         <label for="filtroTipo">Filtrar por tipo:</label>
         <select id="filtroTipo">
           <option value="todos">Todos</option>
-          <option value="Rifle de Assalto">Rifle de Assalto</option>
-          <option value="Submetralhadora">Submetralhadora</option>
-          <option value="Fuzil de Precisão">Fuzil de Precisão</option>
-          <option value="Metralhadora Leve">Metralhadora Leve</option>
-          <option value="Escopeta">Escopeta</option>
+          <option value="Assault Rifle">Rifle de Assalto</option>
+          <option value="SMG">Submetralhadora</option>
+          <option value="Sniper">Fuzil de Precisão</option>
+          <option value="LMG">Metralhadora Leve</option>
+          <option value="Shotgun">Escopeta</option>
         </select>
       </div>
+
       <div id="listaArmas" class="lista-armas"></div>
     `;
+
     filtroCriado = true;
   }
 
-  const filtro = document.getElementById('filtroTipo');
-  const container = document.getElementById('listaArmas');
+  const filtro = document.getElementById("filtroTipo");
+  const container = document.getElementById("listaArmas");
 
-  // Ícones por tipo de arma
-  function getIcon(tipo) {
-    switch (tipo) {
-      case 'Rifle de Assalto': return '<i class="fa-solid fa-gun"></i>';
-      case 'Submetralhadora': return '<i class="fa-solid fa-burst"></i>';
-      case 'Fuzil de Precisão': return '<i class="fa-solid fa-crosshairs"></i>';
-      case 'Metralhadora Leve': return '<i class="fa-solid fa-shield-halved"></i>';
-      case 'Escopeta': return '<i class="fa-solid fa-skull-crossbones"></i>';
-      default: return '<i class="fa-solid fa-circle-question"></i>';
-    }
-  }
+  function renderArmas(tipoFiltro) {
+    container.innerHTML = "";
 
-  // Renderiza as armas na tela
-  function renderArmas(filtroTipo) {
-    container.innerHTML = '';
-    armasCache.forEach(arma => {
-      if (filtroTipo === 'todos' || arma.tipo === filtroTipo) {
-        const armaDiv = document.createElement('div');
-        armaDiv.classList.add('card');
+    armasCache.armas.forEach(arma => {
+      if (tipoFiltro === "todos" || arma.category === tipoFiltro) {
 
-        armaDiv.innerHTML = `
-          <img src="${arma.imagem}" alt="${arma.nome}" class="arma-img">
-          <h3>${arma.nome}</h3>
-          <p><strong>Tipo:</strong> ${getIcon(arma.tipo)} ${arma.tipo}</p>
-          <p><strong>Dano:</strong> ${arma.dano}</p>
-          <p><strong>Cadência:</strong> ${arma.cadencia}</p>
-          <p>${arma.descricao}</p>
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+          <img src="${arma.image}" alt="${arma.name}" class="arma-img">
+          
+          <h3>${arma.name}</h3>
+          <p><strong>Categoria:</strong> ${arma.category}</p>
+
+          <!-- BADGES META (ESTILO C) -->
+          <div class="badges-meta">
+            <span class="badge tier-${arma.tier}">⭐ Tier ${arma.tier}</span>
+            <span class="badge"><i class="fa-solid fa-chart-line"></i> Uso: ${arma.stats.usage}</span>
+            <span class="badge"><i class="fa-solid fa-bullseye"></i> Winrate: ${arma.stats.winrate}</span>
+            <span class="badge"><i class="fa-solid fa-skull"></i> KD: ${arma.stats.kd}</span>
+            <span class="badge"><i class="fa-solid fa-bolt"></i> TTK: ${arma.stats.ttk}</span>
+          </div>
+
           <details>
-            <summary>🔧 Attachments</summary>
+            <summary>🔧 Attachments META</summary>
             <ul class="attachments">
               ${arma.attachments.map(att => `
-                <li><i class="fa-solid fa-screwdriver-wrench"></i>
-                  <strong>${att.nome}</strong> (${att.tipo}) — ${att.efeito}
-                </li>
-              `).join('')}
+                <li>
+                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                  <strong>${att.slot}:</strong> ${att.nome}
+                </li>`
+              ).join("")}
             </ul>
           </details>
         `;
-        container.appendChild(armaDiv);
+
+        container.appendChild(card);
       }
     });
   }
 
-  // Carrega o JSON apenas uma vez
   if (!armasCache) {
-    fetch('dados.json')
+    fetch("dados.json")
       .then(res => res.json())
-      .then(armas => {
-        armasCache = armas;
-        renderArmas('todos');
+      .then(json => {
+        armasCache = json;
+        renderArmas("todos");
       });
   } else {
-    renderArmas(filtro.value || 'todos');
+    renderArmas(filtro.value || "todos");
   }
 
-  // Se o evento do filtro ainda não existe, cria apenas uma vez
   if (!filtro.onchange) {
     filtro.onchange = () => renderArmas(filtro.value);
   }
 }
 
-// 🛠 Atualizações
+
+// =========================================
+// OUTRAS SEÇÕES
+// =========================================
 function mostrarAtualizacoes() {
   conteudo.innerHTML = `
     <div class="card">
       <h3>🛠 Atualizações Recentes</h3>
-      <ul>
-        <li>M4A1: dano aumentado de 40 → 42</li>
-        <li>MP5: leve redução de alcance</li>
-        <li>Nova arma chegando em breve!</li>
-      </ul>
+      <p>As armas estão sendo atualizadas automaticamente via sistema META.</p>
     </div>
   `;
   filtroCriado = false;
 }
 
-// 📰 Notícias
 function mostrarNoticias() {
   conteudo.innerHTML = `
     <div class="card">
@@ -148,42 +144,44 @@ function mostrarNoticias() {
   filtroCriado = false;
 }
 
-// 📊 Estatísticas
 function mostrarStats() {
   conteudo.innerHTML = `
     <div class="card">
       <h3>📊 Estatísticas</h3>
-      <p>Seção de estatísticas será adicionada futuramente.</p>
+      <p>Em breve: gráficos de TTK, popularidade e histórico de metas.</p>
     </div>
   `;
   filtroCriado = false;
 }
 
-// ========= MODO CLARO / ESCURO COM FADE ==========
-const btnTema = document.getElementById('btnTema');
+
+// =========================================
+// 🌙 MODE DARK/ LIGHT
+// =========================================
+const btnTema = document.getElementById("btnTema");
 let modoEscuro = true;
 
 function trocarTema() {
-  document.body.classList.add('tema-trocando');
+  document.body.classList.add("tema-trocando");
+
   setTimeout(() => {
     modoEscuro = !modoEscuro;
-    document.body.classList.toggle('modo-claro', !modoEscuro);
-    btnTema.textContent = modoEscuro ? '🌙' : '☀️';
-    localStorage.setItem('modoEscuro', modoEscuro);
-    document.body.classList.remove('tema-trocando');
+    document.body.classList.toggle("modo-claro", !modoEscuro);
+
+    btnTema.textContent = modoEscuro ? "🌙" : "☀️";
+    localStorage.setItem("modoEscuro", modoEscuro);
+
+    document.body.classList.remove("tema-trocando");
   }, 250);
 }
 
-btnTema.addEventListener('click', trocarTema);
+btnTema.addEventListener("click", trocarTema);
 
-// Mantém o tema salvo ao carregar
-window.addEventListener('load', () => {
-  const salvo = localStorage.getItem('modoEscuro');
+window.addEventListener("load", () => {
+  const salvo = localStorage.getItem("modoEscuro");
   if (salvo !== null) {
-    modoEscuro = salvo === 'true';
-    document.body.classList.toggle('modo-claro', !modoEscuro);
-    btnTema.textContent = modoEscuro ? '🌙' : '☀️';
+    modoEscuro = salvo === "true";
+    document.body.classList.toggle("modo-claro", !modoEscuro);
+    btnTema.textContent = modoEscuro ? "🌙" : "☀️";
   }
 });
-
-

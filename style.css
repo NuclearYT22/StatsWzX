@@ -340,5 +340,84 @@ body.modo-claro .tema-btn {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.arma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.arma-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px #0004;
+  transition: 0.2s;
+}
+
+.dark .arma-card {
+  background: rgba(0,0,0,0.4);
+}
+
+.arma-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #00aaff88;
+}
+
+.icone-arma {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.stats-meta p {
+  margin: 2px 0;
+}
+
+.lista-attachments {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.tier {
+  padding: 3px 6px;
+  border-radius: 6px;
+  color: white;
+}
+
+.tier-S { background: #ff4444; }
+.tier-A { background: #ff8800; }
+.tier-B { background: #ffaa00; }
+.tier-C { background: #00aaff; }
+.tier-D { background: #888; }
+
+.badges-meta {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Tiers coloridos */
+.tier-S { background: #ff3333; color:white; }
+.tier-A { background: #ff8800; color:white; }
+.tier-B { background: #ffaa00; color:white; }
+.tier-C { background: #0099ff; color:white; }
+.tier-D { background: #777; color:white; }
+
+
 
 
